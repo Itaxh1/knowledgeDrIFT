@@ -52,45 +52,38 @@ def knowledgealgo(txtc):
     #count3 = 0
     tempstr1 = ''
     txtc = txtc.split('\n')
+    count5=0
     for i in txtc:
         clean = False
         for word in l:
             if word in i:
                 clean = True
         if clean == True:
-            tempstr1 += i + '\n\n'
+            tempstr1 += i + '\n\n' 
+            count5 += 1
             #count3 += 1
+    
     return tempstr1
         
+def jsonfilew(data):
+    tokenize.sent_tokenize(data)
+    json_string = json.dumps(data)
+    json_string= [line.rstrip() for line in data.split('.') if line]
+    key= []
+    for i in range (0,len(json_string)):
+        key.append(i)    
+    res = dict(zip(key, json_string))
+    print(res)
+    with open("features.json", "w") as outfile:
+        outfile.write(json.dumps(res))
+    
 
+def main(s):
+    s.split('=')[1]
+    s= main()
+    a = scraping(s)
+    b = parseeng(a)
+    txtc = txtclean(b)
+    data= knowledgealgo(txtc)  
+    jsonfilew(data)
 
-def main():
-    """
-    strr = str(input('ENTER::'))
-    s = strr.split('=')[1]
-    """
-    s= "M_3yoOU3-eQ"    
-    return s
-s= main()
-a = scraping(s)
-#print(a)
-b = parseeng(a)
-#print(b)
-#count = 0
-txtc = txtclean(b)
-data= knowledgealgo(txtc)  
-
-tokenize.sent_tokenize(data)
-json_string = json.dumps(data)
-
-data.split("\r\n")
-
-data2= [line.rstrip().split() for line in data.split('.') if line]
-print(data2)  
-
-# Writing to sample.json
-
-json_object = json.dumps(data2)
-
-with open("sample.json", "w") as outfile:
-    outfile.write(json_object)
